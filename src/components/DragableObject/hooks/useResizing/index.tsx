@@ -10,13 +10,14 @@ interface ResizingProps{
 
 interface ResizeReturnType{
   width: number;
-  componentAtributes: {
+  componentAttributes: {
     onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void,
     className: string,
   }
 }
 
 const useResizing = (props:ResizingProps) : ResizeReturnType => {
+
   const { min, max, value } = props;
 
   const isResizing = useRef(false);
@@ -47,7 +48,7 @@ const useResizing = (props:ResizingProps) : ResizeReturnType => {
   return (
     {
       width: width,
-      componentAtributes: {
+      componentAttributes: {
         onMouseDown: handleMouseDown,
         className: "w-1 cursor-ew-resize"
       } 

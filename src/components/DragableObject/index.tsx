@@ -11,12 +11,12 @@ const Draggable: FC<
     value?: number,
   }
 > = ( { setWidth, min, max, value } ) => {
-  const { width, componentAtributes } = useResizing({ min: min, max: max && 1200 , value: value && 500 });
+  const { width, componentAttributes } = useResizing({ min: min, max: max && 1200 , value: value && 500 });
   useEffect(()=>{
     setWidth(width);
   }, [ width, setWidth ])
   return (
-    <div {...componentAtributes} />
+    <div {...componentAttributes} />
   );
 }
 
