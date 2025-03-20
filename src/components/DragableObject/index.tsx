@@ -1,19 +1,22 @@
 'use client'
 
-import CodeEditor from "@/components/CodeEditor";
-import { useState } from "react";
+import { FC, useEffect } from "react";
 import useResizing from "./hooks/useResizing";
 
-const Draggable = () => {
-  const { width, componentAtributes } = useResizing({ min: 200, max: 1200, value: 500 });
-  
+const Draggable: FC<
+  {
+    setWidth: ( width:number ) => void;
+    min: number,
+    max?: number,
+    value?: number,
+  }
+> = ( { setWidth, min, max, value } ) => {
+  const { width, componentAtributes } = useResizing({ min: min, max: max && 1200 , value: value && 500 });
+  useEffect(()=>{
+    setWidth(width);
+  }, [ width, setWidth ])
   return (
-    <div
-      className="h-lvh flex"
-    >
-      <CodeEditor widthScale={width} />
-      <div {...componentAtributes} />
-    </div>
+    <div {...componentAtributes} />
   );
 }
 

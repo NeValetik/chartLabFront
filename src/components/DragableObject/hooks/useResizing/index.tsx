@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, FC } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ResizingProps{
   min: number;
@@ -26,10 +26,10 @@ const useResizing = (props:ResizingProps) : ResizeReturnType => {
     isResizing.current = true;
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isResizing.current) return;
     setWidth(Math.min(max ?? Infinity, Math.max(min, e.clientX)));
-  };
+  }, [ setWidth, max, min ]);
 
   const handleMouseUp = () => {
     isResizing.current = false;
@@ -42,7 +42,7 @@ const useResizing = (props:ResizingProps) : ResizeReturnType => {
       document.removeEventListener("mousemove",handleMouseMove);
       document.removeEventListener("mouseup",handleMouseUp);
     } 
-  }, []);
+  }, [ handleMouseMove ]);
 
   return (
     {

@@ -1,42 +1,22 @@
 'use client'
 
 import CodeEditor from "@/components/CodeEditor";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import Draggable from "@/components/DragableObject";
 
 const InitialPage = () => {
-  const [editorWidth, setEditorWidth ] = useState<number>(500);
-  const isResizing = useRef(false);
-  
-  const handleMouseDown = () => {
-    isResizing.current = true;
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isResizing.current) return;
-    setEditorWidth(e.clientX);
-  };
-
-  const handleMouseUp = () => {
-    isResizing.current = false;
-  };
-
-  useEffect(()=>{
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-    return () => {
-      document.removeEventListener("mousemove",handleMouseMove);
-      document.removeEventListener("mouseup",handleMouseUp);
-    } 
-  }, [ handleMouseMove, handleMouseUp ]);
+  const [ width, setWidth ] = useState( 500 );
 
   return (
     <div
       className="h-lvh flex"
     >
-      <CodeEditor widthScale={editorWidth} />
-      <div 
-        className="w-1 cursor-ew-resize"
-        onMouseDown={handleMouseDown}
+      <CodeEditor widthScale={width} />
+      <Draggable 
+        min={200} 
+        max={1200} 
+        value={width} 
+        setWidth={setWidth} 
       />
     </div>
   );

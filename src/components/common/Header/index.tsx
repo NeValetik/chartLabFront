@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, memo, FC } from "react";
+// import { useState, memo, FC } from "react";
 
 const Header = () => {
   return (
@@ -9,4 +9,4 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+export default Header;
