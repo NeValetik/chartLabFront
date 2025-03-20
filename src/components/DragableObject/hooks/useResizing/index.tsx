@@ -50,7 +50,7 @@ const useResizing = (props:ResizingProps) : ResizeReturnType => {
       width: width,
       componentAttributes: {
         onMouseDown: handleMouseDown,
-        className: "w-1 cursor-ew-resize"
+        className: "w-1 cursor-ew-resize "
       } 
     }
   )
