@@ -11,11 +11,14 @@ const CodeEditor: FC<
   const [ code, setCode ] = useState("// Type here...");
 
   const { widthScale } = props;
+  const min = 300;
+  const max = 1200;
+  const width = min > widthScale ? min : max < widthScale ? max : widthScale 
 
   return (
     <div style={
       {
-        width: widthScale,
+        width: width,
         height: "100%",
         borderRadius: "2px",
       } 
