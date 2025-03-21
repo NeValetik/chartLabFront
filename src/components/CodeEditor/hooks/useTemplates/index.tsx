@@ -20,11 +20,12 @@ const useTemplates = ( { setCode }: UseTemplatesProps ) => {
             key: value.key,
             label: value.label,
             onClick: () => setCode(value.code),
+            code: value.code
           }))
         );
         return;
       }
-      setTemplates([{ key: "0", label: "empty", onClick: ()=>{} }]);
+      setTemplates([{ key: "0", label: "empty", onClick: ()=>{}, code: "//There we go" }]);
     }
     handleFetchTemplates();
     

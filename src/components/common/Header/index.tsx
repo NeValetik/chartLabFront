@@ -9,7 +9,8 @@ const Header = () => {
           src="logo.svg"
           alt="logo"
           width={ 40 }
-          height={ 40 } 
+          height={ 40 }
+          className="h-auto w-10" 
         />
       </div>  
       <p className="font-bold text-2xl text-gray-500">

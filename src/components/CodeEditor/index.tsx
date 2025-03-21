@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, memo, FC, useCallback } from "react";
+import { useState, memo, FC, useCallback, useEffect } from "react";
 import { RiPlayLargeFill } from "@remixicon/react";
 import { sendCode } from "./utils";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
@@ -12,7 +12,7 @@ export interface Template{
   key: string;
   label: string;
   onClick: () => void;
-  // code: string;
+  code: string;
 };
 
 // here should be fetched
@@ -31,17 +31,17 @@ const CodeEditor: FC<
   const handleOnRunClick = useCallback(async() => {
     const resp = await sendCode(code);
     console.log(resp);
-  }, []) 
-
+  }, []);
+  
   return (
     <div 
-    style={
-      {
-        width: widthScale,
-        height: "100%",
-        borderRadius: "2px", 
-      } 
-    }
+      style={
+        {
+          width: widthScale,
+          height: "100%",
+          borderRadius: "2px", 
+        } 
+      }
     >
       <div className="flex justify-between bg-[#383838] px-3">
         <Menu>
@@ -69,7 +69,8 @@ const CodeEditor: FC<
                   >
                     <button
                       className=""
-                      onClick={template.onClick}
+                      type="button"
+                      onClick={()=>setCode(template.code)}
                     >
                       {template.label}
                     </button>
@@ -95,6 +96,7 @@ const CodeEditor: FC<
         height="100%"
         defaultLanguage=""
         defaultValue={code}
+        value={code}
         theme="vs-dark"
         onChange={(value) => setCode(value || "")}
         options={{
