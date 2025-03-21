@@ -46,6 +46,6 @@ export const fetchTemplates = async (): Promise<TemplateResponse[]> => {
 
     return await response.json();
   } catch (error) {
-    throw error;
+    return [];
   }
 };
