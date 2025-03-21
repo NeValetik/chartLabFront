@@ -104,6 +104,9 @@ const CodeEditor: FC<
           wordBasedSuggestions: "off", 
           autoClosingBrackets: "never", 
           autoClosingQuotes: "never",
+          minimap:{
+            enabled: false,
+          }
            
         }}
       />

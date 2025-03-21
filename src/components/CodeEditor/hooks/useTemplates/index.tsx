@@ -28,7 +28,7 @@ const useTemplates = ( { setCode }: UseTemplatesProps ) => {
     }
     handleFetchTemplates();
     
-  }, [setCode])
+  }, [ setCode ])
   
   return { templates };
 }
