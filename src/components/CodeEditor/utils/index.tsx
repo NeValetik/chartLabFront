@@ -1,7 +1,7 @@
 'use server'
 
 export const sendCode = async (code:string) => {
-  const api = "/api/v1/plot#lab";
+  const api = "/api/v1/plot-lab";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {
