@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, memo, FC, useCallback, useEffect } from "react";
+import { useState, memo, FC, useCallback } from "react";
 import { RiPlayLargeFill } from "@remixicon/react";
 import { sendCode } from "./utils";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
@@ -31,7 +31,7 @@ const CodeEditor: FC<
   const handleOnRunClick = useCallback(async() => {
     const resp = await sendCode(code);
     console.log(resp);
-  }, []);
+  }, [ code ]);
   
   return (
     <div 
