@@ -1,6 +1,6 @@
 'use server'
 
-export const sendCode = async (code:string) => {
+export const sendCode = async (code:string): Promise<string> => {
   const api = "/api/v1/plot-lab";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
@@ -16,11 +16,14 @@ export const sendCode = async (code:string) => {
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
     }
+    const blob = await response.blob();
 
-    return await response.json();
+    const arrayBuffer = await blob.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString("base64");
+    return `data:image/png;base64,${base64}`;
   } catch (error) {
     console.error("Error sending code:", error);
-    return error; // Re-throw the error for the caller to handle
+    return ""; // Re-throw the error for the caller to handle
   }
 };
 

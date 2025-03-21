@@ -16,22 +16,19 @@ export interface Template{
 };
 
 // here should be fetched
-
 const CodeEditor: FC<
   {
     widthScale: number;
+    onRunClick: (code:string) => () => void;
   }
 > = (props) => {
+  const { widthScale, onRunClick } = props;
+  
   const [ code, setCode ] = useState("// Type here...");
-
-  const { widthScale } = props;
 
   const { templates } = useTemplates({setCode});
   
-  const handleOnRunClick = useCallback(async() => {
-    const resp = await sendCode(code);
-    console.log(resp);
-  }, [ code ]);
+  
   
   return (
     <div 
@@ -83,7 +80,7 @@ const CodeEditor: FC<
         <div className="p-1">
           <button 
             className="rounded-full p-2 bg-gray-400"
-            onClick={handleOnRunClick}
+            onClick={onRunClick(code)}
           >
             <RiPlayLargeFill
               size={16} 
