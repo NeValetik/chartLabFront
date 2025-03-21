@@ -8,19 +8,18 @@ interface UseTemplatesProps {
   setCode: (code: string) => void;
 }
 
-
 const useTemplates = ( { setCode }: UseTemplatesProps ) => {
   const [ templates, setTemplates ] = useState<Template[]>([]);
 
   useEffect(()=>{
     const handleFetchTemplates = async() =>{
       const resp = await fetchTemplates();
-      if ( resp ) {
+      if ( Array.isArray(resp) && resp.length > 0 ) {
         setTemplates(
           resp.map((value) => ({
             key: value.key,
             label: value.label,
-            onClick: () => setCode(value.code), // Fix: Pass function reference
+            onClick: () => setCode(value.code),
           }))
         );
         return;
@@ -29,9 +28,9 @@ const useTemplates = ( { setCode }: UseTemplatesProps ) => {
     }
     handleFetchTemplates();
     
-  }, [])
+  }, [setCode])
   
-  return templates;
+  return { templates };
 }
 
 export default useTemplates;

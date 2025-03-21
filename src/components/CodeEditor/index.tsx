@@ -26,7 +26,7 @@ const CodeEditor: FC<
 
   const { widthScale } = props;
 
-  const templates = useTemplates({setCode});
+  const { templates } = useTemplates({setCode});
   
   const handleOnRunClick = useCallback(async() => {
     const resp = await sendCode(code);

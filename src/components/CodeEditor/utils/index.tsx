@@ -46,7 +46,6 @@ export const fetchTemplates = async (): Promise<TemplateResponse[]> => {
 
     return await response.json();
   } catch (error) {
-    console.error("Error sending code:", error);
-    throw error; // Re-throw the error for the caller to handle
+    throw error;
   }
 };
