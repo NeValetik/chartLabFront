@@ -6,27 +6,16 @@ import { sendCode } from "./utils";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 
 import Editor from "@monaco-editor/react";
+import useTemplates from "./hooks/useTemplates";
 
-interface Template{
+export interface Template{
+  key: string;
   label: string;
-  onClick: ()=> void;
+  onClick: () => void;
+  // code: string;
 };
 
 // here should be fetched
-const templates: Template[] = [
-  {
-    label: "Bar chart",
-    onClick: () => {}
-  },
-  {
-    label: "Another Chart",
-    onClick: () => {}
-  },
-  {
-    label: "And Another Chart",
-    onClick: () => {}
-  },
-]
 
 const CodeEditor: FC<
   {
@@ -36,6 +25,8 @@ const CodeEditor: FC<
   const [ code, setCode ] = useState("// Type here...");
 
   const { widthScale } = props;
+
+  const templates = useTemplates({setCode});
   
   const handleOnRunClick = useCallback(async() => {
     const resp = await sendCode(code);
@@ -74,7 +65,7 @@ const CodeEditor: FC<
                 return (
                   <MenuItem 
                     as="div"
-                    key={template.label} 
+                    key={template.key} 
                   >
                     <button
                       className=""
@@ -112,7 +103,8 @@ const CodeEditor: FC<
           parameterHints: { enabled: false }, 
           wordBasedSuggestions: "off", 
           autoClosingBrackets: "never", 
-          autoClosingQuotes: "never", 
+          autoClosingQuotes: "never",
+           
         }}
       />
     </div>
