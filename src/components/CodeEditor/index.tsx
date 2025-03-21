@@ -1,7 +1,32 @@
 'use client'
 
-import { useState, memo, FC } from "react";
+import { useState, memo, FC, useCallback } from "react";
+import { RiPlayLargeFill } from "@remixicon/react";
+import { sendCode } from "./utils";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
+
 import Editor from "@monaco-editor/react";
+
+interface Template{
+  label: string;
+  onClick: ()=> void;
+};
+
+// here should be fetched
+const templates: Template[] = [
+  {
+    label: "Bar chart",
+    onClick: () => {}
+  },
+  {
+    label: "Another Chart",
+    onClick: () => {}
+  },
+  {
+    label: "And Another Chart",
+    onClick: () => {}
+  },
+]
 
 const CodeEditor: FC<
   {
@@ -11,18 +36,70 @@ const CodeEditor: FC<
   const [ code, setCode ] = useState("// Type here...");
 
   const { widthScale } = props;
-  const min = 300;
-  const max = 1200;
-  const width = min > widthScale ? min : max < widthScale ? max : widthScale 
+  
+  const handleOnRunClick = useCallback(async() => {
+    const resp = await sendCode(code);
+    console.log(resp);
+  }, []) 
 
   return (
-    <div style={
+    <div 
+    style={
       {
-        width: width,
+        width: widthScale,
         height: "100%",
-        borderRadius: "2px",
+        borderRadius: "2px", 
       } 
-    }>
+    }
+    >
+      <div className="flex justify-between bg-[#383838] px-3">
+        <Menu>
+          <MenuButton
+            className="
+              rounded px-1 my-1 bg-gray-500
+              text-[#C9C9C9]
+            "
+          >
+            Templates
+          </MenuButton>
+          <MenuItems 
+            anchor="bottom"
+            className="
+              bg-gray-300 p-3
+              rounded divide-y-2 divide-gray-400
+            "
+          >
+            {templates.map((template)=> 
+              {
+                return (
+                  <MenuItem 
+                    as="div"
+                    key={template.label} 
+                  >
+                    <button
+                      className=""
+                      onClick={template.onClick}
+                    >
+                      {template.label}
+                    </button>
+                  </MenuItem>
+                );
+              })
+            }
+          </MenuItems>
+        </Menu>
+        <div className="p-1">
+          <button 
+            className="rounded-full p-2 bg-gray-400"
+            onClick={handleOnRunClick}
+          >
+            <RiPlayLargeFill
+              size={16} 
+              className="h-4 w-4"
+            />
+          </button>
+        </div>
+      </div>
       <Editor
         height="100%"
         defaultLanguage=""
