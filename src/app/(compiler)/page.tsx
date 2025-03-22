@@ -19,22 +19,27 @@ const InitialPage = () => {
   }, []);
 
   return (
-    <div
-      className="h-lvh flex"
-    >
-      <CodeEditor 
-        widthScale={width} 
-        onRunClick={handleOnRunClick}
-      />
-      <Draggable 
-        min={200} 
-        max={1200} 
-        value={width} 
-        setWidth={setWidth} 
-      />
-      {image&&
-        <Image src={image} alt="Graph" width={width} height={1080} className="w-full h-full"/>
-      }
+    <div className="h-lvh flex">
+      {/* Left side - CodeEditor */}
+      <div style={{ flex: `0 0 ${width}px` }}>
+        <CodeEditor widthScale={width} onRunClick={handleOnRunClick}/>
+      </div>
+
+      {/* Draggable Divider */}
+      <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
+
+      {/* Right side - Image */}
+      {image && (
+        <div style={{ flex: `1` }}>  {/* Allow Image to resize dynamically */}
+          <Image
+            src={image}
+            alt="Graph"
+            width={width} // Keep width proportional
+            height={1080}
+            className="w-full h-auto"
+          />
+        </div>
+      )}
     </div>
   );
 }
