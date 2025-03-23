@@ -38,16 +38,16 @@ const CodeEditor: FC<
         } 
       }
     >
-      <div className="flex justify-between bg-[#383838] px-3">
+      <div className="flex justify-between bg-[#383838] px-3 py-1">
         <Menu>
-          <MenuButton
-            className="
-              rounded px-1 my-1 bg-[#2C927E]
-              text-[#C9C9C9]
-              cursor-pointer
-            "
-          >
-            Templates
+          <MenuButton>
+            <Button
+              variant="primary"
+              tone="green"
+              size="medium"
+            >
+              Templates
+            </Button>
           </MenuButton>
           <MenuItems 
             anchor="bottom start"
@@ -77,16 +77,18 @@ const CodeEditor: FC<
           </MenuItems>
         </Menu>
         <div className="p-1">
-          <button 
-            className="rounded-full p-2 bg-[#2C927E] cursor-pointer"
+          <Button
+            variant="primary-inverted"
+            tone="red"
+            size="medium"
+            className="rounded-full"
             onClick={onRunClick(code)}
           >
             <RiPlayLargeFill
               size={16} 
               className="h-4 w-4"
-              color="#6A7282"
             />
-          </button>
+          </Button>
         </div>
       </div>
       <Editor

@@ -1,63 +1,106 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, ReactNode, ButtonHTMLAttributes  } from 'react'
 import { Button } from '@headlessui/react'
 
 const toneFragment = `
+  bg-monokai-gray-800
   text-monokai-gray-500
   data-[hover]:text-monokai-gray-1000 
+`;
+
+const toneInvertedFragment = `
+  text-monokai-gray-1000
+  data-[hover]:text-monokai-gray-500
+  data-[hover]:bg-monokai-gray-800
+  data-[hover]:data-[active]:bg-monokai-gray-800
 `;
 
 const toneClass = ( tone: IButtonProps["tone"] ) => {
   switch( tone ) {
     case 'red':
       return `
-        bg-monokai-gray-800
         data-[hover]:bg-monokai-red
         data-[hover]:data-[active]:bg-monokai-red
         ${toneFragment}
       `;
     case 'green':
       return `
-        bg-monokai-gray-800
         data-[hover]:bg-monokai-green
         data-[hover]:data-[active]:bg-monokai-green
         ${toneFragment}
       `;
     case 'blue':
       return `
-        bg-monokai-gray-800
         data-[hover]:bg-monokai-blue
         data-[hover]:data-[active]:bg-monokai-blue
         ${toneFragment}
       `; 
     case 'orange':
       return `
-        bg-monokai-gray-800
         data-[hover]:bg-monokai-orange
         data-[hover]:data-[active]:bg-monokai-orange
         ${toneFragment}
       `;
     case 'violet':
       return `
-        bg-monokai-gray-800
         data-[hover]:bg-monokai-violet
         data-[hover]:data-[active]:bg-monokai-violet
         ${toneFragment}
       `;
     case 'yellow':
       return `
-        bg-monokai-gray-800
         data-[hover]:bg-monokai-yellow
         data-[hover]:data-[active]:bg-monokai-yellow
         ${toneFragment}
       `;
     case 'simple':
       return `
-        bg-monokai-gray-800
         data-[hover]:bg-monokai-gray-500
         data-[hover]:data-[active]:bg-monokai-gray-500
         ${toneFragment}
+      `;
+    default:
+      return "";
+  }
+};
+
+const toneClassInverted = ( tone: IButtonProps["tone"] ) => {
+  switch( tone ) {
+    case 'red':
+      return `
+        bg-monokai-red
+        ${toneInvertedFragment}
+      `;
+    case 'green':
+      return `
+        bg-monokai-green
+        ${toneInvertedFragment}
+      `;
+    case 'blue':
+      return `
+        bg-monokai-blue
+        ${toneInvertedFragment}
+      `; 
+    case 'orange':
+      return `
+        bg-monokai-orange
+        ${toneInvertedFragment}
+      `;
+    case 'violet':
+      return `
+        bg-monokai-violet
+        ${toneInvertedFragment}
+      `;
+    case 'yellow':
+      return `
+        bg-monokai-yellow
+        ${toneInvertedFragment}
+      `;
+    case 'simple':
+      return `
+        bg-monokai-gray-500
+        ${toneInvertedFragment}
       `;
     default:
       return "";
@@ -131,6 +174,10 @@ const variantClass = (variant: IButtonProps['variant'], tone: IButtonProps['tone
       return `
         ${toneClass(tone)}
       `;
+    case 'primary-inverted':
+      return `
+        ${toneClassInverted(tone)}
+      `;  
     case 'secondary':
       return `
         border-2 border-monokai-gray-800
@@ -149,12 +196,12 @@ const variantClass = (variant: IButtonProps['variant'], tone: IButtonProps['tone
   }
 };
 
-interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'tertiary',
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'primary-inverted' | 'secondary' | 'tertiary',
   tone?: 'red' | 'green' | 'blue' | 'orange' | 'violet' | 'yellow' | 'simple' ,
   size?: 'small' | 'medium' | 'large',
   underline?: boolean,
-  children?: React.ReactNode,
+  children?: ReactNode,
 };
 
 const ButtonBase: FC<IButtonProps> = ( props ) => {
