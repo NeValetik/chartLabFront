@@ -24,11 +24,10 @@ const InitialPage = () => {
         <CodeEditor widthScale={width} onRunClick={handleOnRunClick}/>
       </div>
       <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
-
-      {image && (
+      {image ? (
         <div 
           style={{ flex: `1` }}
-          className="select-none"
+          className="select-none w-full h-full bg-monokai-gray-800"
         >
           <Image
             src={image}
@@ -38,7 +37,15 @@ const InitialPage = () => {
             className="w-full h-auto"
           />
         </div>
-      )}
+      ) : (
+        <div 
+          style={{ flex: `1` }}
+          className="select-none w-full h-full bg-monokai-gray-800"
+        >
+
+        </div>
+      )
+      }
     </div>
   );
 }

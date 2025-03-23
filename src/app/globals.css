@@ -10,8 +10,10 @@
   --color-monokai-white: #FCFCFA;
   --color-monokai-gray-1000: #221F22;
   --color-monokai-gray-800: #2D2A2E;
+  --color-monokai-gray-700: #403e41;
   --color-monokai-gray-500: #727072;
   --color-monokai-gray-100: #FCFCFA;
+  
 }
 
 :root {

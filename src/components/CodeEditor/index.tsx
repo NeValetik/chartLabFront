@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, memo, FC, useEffect } from "react";
+import { useState, memo, FC } from "react";
 import { RiPlayLargeFill } from "@remixicon/react";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 
@@ -27,42 +27,6 @@ const CodeEditor: FC<
   const [ code, setCode ] = useState("// Type here...");
 
   const { templates } = useTemplates({setCode});
-  
-  // useEffect(() => {
-  //   import('monaco-editor').then((monaco) => {
-  //     // Use monaco here
-  //     monaco.languages.register({ id: 'custom-lang' });
-  //     monaco.languages.setMonarchTokensProvider('custom-lang', {
-  //       tokenizer: {
-  //         root: [
-  //           [/\b(start|end|run)\b/, 'keyword'],
-  //           [/\b([a-zA-Z_][\w]*)\s*\(/, 'function'],
-  //           [/\b([a-zA-Z_][\w]*)\b/, 'variable'],
-  //           [/\b\d+\b/, 'number'],
-  //           [/'[^']*'/, 'string'],
-  //         ]
-  //       }
-  //     });
-  
-  //     monaco.editor.defineTheme('custom-theme', {
-  //       base: 'vs-dark',
-  //       inherit: true,
-  //       rules: [
-  //         { token: 'keyword', foreground: 'blue' },
-  //         { token: 'function', foreground: 'red' },
-  //         { token: 'variable', foreground: 'white' },
-  //         { token: 'number', foreground: 'green' },
-  //         { token: 'string', foreground: 'yellow' },
-  //       ],
-  //       colors: {
-  //         'editor.background': '#2d2d2d',
-  //         'editor.foreground': '#ffffff',
-  //       }
-  //     });
-  
-  //     monaco.editor.setTheme('custom-theme');
-  //   });
-  // }, []);
 
   return (
     <div 
@@ -74,7 +38,7 @@ const CodeEditor: FC<
         } 
       }
     >
-      <div className="flex justify-between bg-[#383838] px-3 py-1">
+      <div className="flex justify-between bg-monokai-gray-800 px-3 py-1">
         <Menu>
           <MenuButton
             className="
@@ -85,7 +49,7 @@ const CodeEditor: FC<
               gap-1
               data-[hover]:bg-monokai-green
               data-[hover]:data-[active]:bg-monokai-green
-              bg-monokai-gray-800
+              bg-monokai-gray-700
               text-monokai-gray-500
               data-[hover]:text-monokai-gray-1000
               py-2 px-4 

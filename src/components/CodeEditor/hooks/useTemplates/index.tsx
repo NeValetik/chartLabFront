@@ -28,7 +28,6 @@ const useTemplates = ( { setCode }: UseTemplatesProps ) => {
       setTemplates([{ key: "0", label: "empty", onClick: ()=>{}, code: "//There we go" }]);
     }
     handleFetchTemplates();
-    
   }, [ setCode ])
   
   return { templates };

@@ -4,7 +4,7 @@ import { FC, ReactNode, ButtonHTMLAttributes  } from 'react'
 import { Button } from '@headlessui/react'
 
 const toneFragment = `
-  bg-monokai-gray-800
+  bg-monokai-gray-700
   text-monokai-gray-500
   data-[hover]:text-monokai-gray-1000 
 `;
@@ -12,8 +12,8 @@ const toneFragment = `
 const toneInvertedFragment = `
   text-monokai-gray-1000
   data-[hover]:text-monokai-gray-500
-  data-[hover]:bg-monokai-gray-800
-  data-[hover]:data-[active]:bg-monokai-gray-800
+  data-[hover]:bg-monokai-gray-700
+  data-[hover]:data-[active]:bg-monokai-gray-700
 `;
 
 const toneClass = ( tone: IButtonProps["tone"] ) => {
@@ -180,7 +180,7 @@ const variantClass = (variant: IButtonProps['variant'], tone: IButtonProps['tone
       `;  
     case 'secondary':
       return `
-        border-2 border-monokai-gray-800
+        border-2 border-monokai-gray-700
         text-monokai-gray-500
         ${getHoverTextClass(tone)}
         ${getHoverBorderClass(tone)}
