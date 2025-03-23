@@ -5,16 +5,20 @@ import { sendCode } from "@/components/CodeEditor/utils";
 
 import CodeEditor from "@/components/CodeEditor";
 import Draggable from "@/components/DragableObject";
-import Image from "next/image";
+import ImageSection from "@/components/ImageSection";
 
 const InitialPage = () => {
-  const [ width, setWidth ] = useState<number>( 500 );
+  const [ width, setWidth ] = useState<number>( 700 );
   const [ image, setImage ] = useState<string>( "" );
+  const [ loading, setLoading ] = useState<boolean>( false );
 
   const handleOnRunClick = useCallback((code: string) => async() => {
+    setImage("");
+    setLoading(true);
     const resp = await sendCode(code);
+    setTimeout(()=>{setLoading(false)},2600)
     if (resp.length>0){
-      setImage(resp);
+      setTimeout(()=>{setImage(resp)},2600);
     };
   }, []);
 
@@ -24,28 +28,7 @@ const InitialPage = () => {
         <CodeEditor widthScale={width} onRunClick={handleOnRunClick}/>
       </div>
       <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
-      {image ? (
-        <div 
-          style={{ flex: `1` }}
-          className="select-none w-full h-full bg-monokai-gray-800"
-        >
-          <Image
-            src={image}
-            alt="Graph"
-            width={width}
-            height={1080}
-            className="w-full h-auto"
-          />
-        </div>
-      ) : (
-        <div 
-          style={{ flex: `1` }}
-          className="select-none w-full h-full bg-monokai-gray-800"
-        >
-
-        </div>
-      )
-      }
+      <ImageSection image={image} loading={loading} />
     </div>
   );
 }

@@ -20,7 +20,7 @@ const Header = () => {
             className="h-auto w-10" 
             />
         </div>  
-        <p className="font-bold text-2xl text-gray-500">
+        <p className="font-bold text-2xl text-monokai-yellow">
           ChartLab
         </p>
       </div>
@@ -28,10 +28,10 @@ const Header = () => {
         <Button
           variant="primary"
           size="small"
-          tone="green"
+          tone="yellow"
         >
           <div
-            className="text-xl "
+            className="text-xl font-bold"
           >
             Docs
           </div>

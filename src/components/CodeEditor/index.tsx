@@ -33,7 +33,7 @@ const CodeEditor: FC<
       style={
         {
           width: widthScale,
-          height: "100%",
+          height: "93.9%",
           borderRadius: "2px", 
         } 
       }
@@ -47,12 +47,13 @@ const CodeEditor: FC<
               flex justify-center items-center 
               cursor-pointer
               gap-1
-              data-[hover]:bg-monokai-green
+              data-[hover]:bg-monokai-yellow
               data-[hover]:data-[active]:bg-monokai-green
               bg-monokai-gray-700
               text-monokai-gray-500
               data-[hover]:text-monokai-gray-1000
               py-2 px-4 
+              font-bold
             "
           >
             Templates
