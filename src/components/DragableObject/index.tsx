@@ -12,11 +12,16 @@ const Draggable: FC<
   }
 > = ( { setWidth, min, max, value } ) => {
   const { width, componentAttributes } = useResizing({ min: min, max: max && 1200 , value: value && 500 });
+  const { className, onMouseDown } = componentAttributes;
   useEffect(()=>{
     setWidth(width);
   }, [ width, setWidth ])
   return (
-    <div {...componentAttributes} />
+    <div className={`${className} bg-monokai-gray-500 flex flex-col justify-center`} onMouseDown={onMouseDown}>
+      <div className="overflow-x-visible ">
+        
+      </div>
+    </div>
   );
 }
 

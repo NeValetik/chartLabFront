@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, memo, FC, useCallback } from "react";
+import { useState, memo, FC } from "react";
 import { RiPlayLargeFill } from "@remixicon/react";
-import { sendCode } from "./utils";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 
+import Button from "../Button";
 import Editor from "@monaco-editor/react";
 import useTemplates from "./hooks/useTemplates";
 
@@ -28,8 +28,6 @@ const CodeEditor: FC<
 
   const { templates } = useTemplates({setCode});
   
-  
-  
   return (
     <div 
       style={
@@ -44,14 +42,15 @@ const CodeEditor: FC<
         <Menu>
           <MenuButton
             className="
-              rounded px-1 my-1 bg-gray-500
+              rounded px-1 my-1 bg-[#2C927E]
               text-[#C9C9C9]
+              cursor-pointer
             "
           >
             Templates
           </MenuButton>
           <MenuItems 
-            anchor="bottom"
+            anchor="bottom start"
             className="
               bg-gray-300 p-3
               rounded divide-y-2 divide-gray-400
@@ -65,7 +64,7 @@ const CodeEditor: FC<
                     key={template.key} 
                   >
                     <button
-                      className=""
+                      className="cursor-pointer"
                       type="button"
                       onClick={()=>setCode(template.code)}
                     >
@@ -79,12 +78,13 @@ const CodeEditor: FC<
         </Menu>
         <div className="p-1">
           <button 
-            className="rounded-full p-2 bg-gray-400"
+            className="rounded-full p-2 bg-[#2C927E] cursor-pointer"
             onClick={onRunClick(code)}
           >
             <RiPlayLargeFill
               size={16} 
               className="h-4 w-4"
+              color="#6A7282"
             />
           </button>
         </div>

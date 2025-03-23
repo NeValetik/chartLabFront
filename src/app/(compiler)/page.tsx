@@ -30,7 +30,10 @@ const InitialPage = () => {
 
       {/* Right side - Image */}
       {image && (
-        <div style={{ flex: `1` }}>  {/* Allow Image to resize dynamically */}
+        <div 
+          style={{ flex: `1` }}
+          className="select-none"
+        >  {/* Allow Image to resize dynamically */}
           <Image
             src={image}
             alt="Graph"
