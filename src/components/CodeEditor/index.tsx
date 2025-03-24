@@ -36,10 +36,9 @@ const CodeEditor: FC<
       style={
         {
           width: widthScale,
-          height: "93.9%",
-          borderRadius: "2px", 
         } 
       }
+      className="h-full"
     >
       <div className="flex justify-between bg-monokai-gray-800 px-3 py-1">
         <div className="flex gap-4 items-center">
@@ -123,7 +122,10 @@ const CodeEditor: FC<
         defaultLanguage=""
         defaultValue={code}
         value={code}
-        theme="vs-dark"
+        loading={<div className="w-full h-full bg-monokai-gray-1000 text-monokai-gray-100 flex justify-center items-center">
+          <span>Loading Editor...</span>
+        </div>}
+        theme= "vs-dark"
         onChange={(value) => setCode(value || "")}
         options={{
           quickSuggestions: false, 
@@ -135,10 +137,10 @@ const CodeEditor: FC<
           minimap:{
             enabled: false,
           }
-           
+          
         }}
       />
-    </div>
+      </div>
   );
 };
 
