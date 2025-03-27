@@ -53,3 +53,28 @@ export const fetchTemplates = async (): Promise<TemplateResponse[]> => {
     return [];
   }
 };
+
+export const saveTemplate = async (code:string): Promise<string> => {
+  const api = "/api/v1/save-templates";
+  const url = `${process.env.SERVER_ENDPOINT}${api}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filename: "try1" ,  code }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error("Error sending code:", error);
+    return ""; // Re-throw the error for the caller to handle
+  }
+};
