@@ -3,7 +3,8 @@
 import { useState, memo, FC } from "react";
 import { 
   RiPlayLargeFill,
-  RiFileAddLine
+  RiFileAddLine,
+  RiStickyNoteAddLine
 } from "@remixicon/react";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -31,10 +32,10 @@ const CodeEditor: FC<
   const { widthScale, onRunClick , onSaveClick} = props;
   
   const form = useForm();
-  // const {
-  //   setValue,
-  //   handleSubmit
-  // } = form;
+  const {
+    setValue,
+    handleSubmit
+  } = form;
   
   const [ files ] = useState<File[] | null>(null)
   const [ code, setCode ] = useState("// Type here...");
@@ -98,17 +99,36 @@ const CodeEditor: FC<
                 }
               </MenuItems>
             </Menu>
-            <div>
-              <Button
-                variant="primary"
-                tone="yellow"
-                size="medium"
-                className="text-base font-bold"
-                // onClick={onRunClick(code)}
-              >
-                View files
-              </Button>
-            </div>
+            <Button
+              variant="primary"
+              tone="yellow"
+              size="large"
+              className="text-base font-bold"
+              onClick={onSaveClick(code)}
+            >
+              <RiStickyNoteAddLine
+                size={16} 
+                className="h-4 w-4"
+              />
+            </Button>
+          </div>
+          <div 
+            className={`
+              flex gap-4
+              transition-all duration-300 
+              ${widthScale > 500 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+            `}
+            hidden={ widthScale <= 480 }
+          >
+            <Button
+              variant="primary"
+              tone="yellow"
+              size="medium"
+              className="text-base font-bold"
+              // onClick={onRunClick(code)}
+            >
+              View files
+            </Button>
             <Menu>
               <MenuButton
                 className="
@@ -147,17 +167,6 @@ const CodeEditor: FC<
             </Menu>
           </div>
           <div className="flex gap-4">
-            <div>
-              <Button
-                variant="primary"
-                tone="yellow"
-                size="medium"
-                className="text-base font-bold"
-                onClick={onSaveClick(code)}
-              >
-                Save Template
-              </Button>
-            </div>
             <div>
               <Button
                 variant="primary-inverted"
