@@ -1,7 +1,7 @@
 import FileInput from "@/components/Form/FileInput";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 
-const DropzoneForm = () => {
+export const DropzoneForm = () => {
 
   return (
     <Menu>

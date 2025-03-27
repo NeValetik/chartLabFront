@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from "react";
+// import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import Label from "../Label";
 import Input from "../Input";
@@ -9,9 +9,12 @@ export interface DropzoneDefaultValues {
   files: File[];
 }
 
-const FileInput: FC<{ onSubmit?: () => void }> = ({ onSubmit }) => {
+const FileInput = () => {
   const form = useFormContext();
-  const { setValue, handleSubmit } = form;
+  const { 
+    setValue, 
+    // handleSubmit 
+  } = form;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {

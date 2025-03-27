@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, memo, FC, useCallback } from "react";
+import { useState, memo, FC } from "react";
 import { 
   RiPlayLargeFill,
   RiFileAddLine
 } from "@remixicon/react";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { FormProvider, useForm } from "react-hook-form";
-import FileInput, { DropzoneDefaultValues } from "../Form/FileInput";
+import FileInput from "../Form/FileInput";
 
 import Button from "../Button";
 import Editor from "@monaco-editor/react";
@@ -31,12 +31,12 @@ const CodeEditor: FC<
   const { widthScale, onRunClick , onSaveClick} = props;
   
   const form = useForm();
-  const {
-    setValue,
-    handleSubmit
-  } = form;
+  // const {
+  //   setValue,
+  //   handleSubmit
+  // } = form;
   
-  const [ files, setFiles ] = useState<File[] | null>(null)
+  const [ files ] = useState<File[] | null>(null)
   const [ code, setCode ] = useState("// Type here...");
   const { templates } = useTemplates( { setCode } );
 

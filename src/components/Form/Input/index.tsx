@@ -1,14 +1,17 @@
 'use client'
 
 import { FC, InputHTMLAttributes } from "react";
-import { useFormContext } from "react-hook-form";
+// import { useFormContext } from "react-hook-form";
 
 import Label from "../Label";
 
-interface InputBaseProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface InputBaseProps extends InputHTMLAttributes<HTMLInputElement> {
+  error?:string;
+  required?:boolean;
+}
 
 const InputBase: FC<InputBaseProps> = (props) => {
-  const form = useFormContext();
+  // const form = useFormContext();
 
   const { type, className, ...rest } = props
 

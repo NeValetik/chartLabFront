@@ -18,6 +18,9 @@ const InitialPage = () => {
   const handleOnRunClick = useCallback((code: string, files?: File[] | null) => async() => {
     setImage("");
     setLoading(true);
+    if (files){
+      console.log(files);
+    } 
     const resp = await sendCode(code);
     setTimeout(()=>{setLoading(false)},2600)
     if (resp.length>0){
