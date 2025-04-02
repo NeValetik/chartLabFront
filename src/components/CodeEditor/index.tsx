@@ -75,8 +75,9 @@ const CodeEditor: FC<
               <MenuItems 
                 anchor="bottom start"
                 className="
-                  bg-gray-300 p-3
-                  rounded divide-y-2 divide-gray-400
+                  mt-2
+                  bg-monokai-gray-800 p-3
+                  rounded divide-y-2 divide-monokai-gray-700
                 "
               >
                 {templates.map((template)=> 
@@ -87,7 +88,7 @@ const CodeEditor: FC<
                         key={template.key} 
                       >
                         <button
-                          className="cursor-pointer"
+                          className="cursor-pointer font-bold text-monokai-gray-500"
                           type="button"
                           onClick={()=>setCode(template.code)}
                         >
