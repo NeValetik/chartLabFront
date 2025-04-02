@@ -14,7 +14,7 @@ const InitialPage = () => {
   const [ loading, setLoading ] = useState<boolean>( false );
 
   const { refresh } = useRouter();
-
+  
   const handleOnRunClick = useCallback((code: string, files?: File[] | null) => async() => {
     setImage("");
     setLoading(true);

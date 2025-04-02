@@ -1,47 +1,73 @@
 'use client';
 
 // import { FC } from "react";
+import { useState, useRef, useCallback, ChangeEvent, InputHTMLAttributes, FC } from "react";
 import { useFormContext } from "react-hook-form";
-import { useState } from "react";
 
 import Label from "../Label";
 import Input from "../Input";
 
-const FileInput = () => {
-  const [ files, setFiles ] = useState<File[]>([]);
+interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  error?:string;
+  required?:boolean;
+}
+
+const FileInput: FC<FileInputProps> = ( props ) => {
+  const { 
+    placeholder = "file",
+    error,
+    required, 
+    ...rest 
+  } = props 
+  const [ fileName, setFileName ] = useState<string | null>();
 
   const form = useFormContext();
   const { 
     setValue, 
   } = form;
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setFiles(Array.from(event.target.files))
-      setValue("files", Array.from(event.target.files));
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[ 0 ];
+    if ( file ) {
+      setFileName(file.name)
+      setValue("files", file);
     }
   };
 
-  if (files.length>0) {
-    return(
-      <>
+  const ref = useRef<HTMLInputElement>( null );
 
-      </>
-    );
-  }
+  const handleClick = useCallback(
+    () => {
+      if ( ref.current ) {
+        ref.current.click();
+      }
+    },
+    [ ref ],
+  );
 
   return (
     <div>
-      <Label htmlFor="file_input">Upload file:</Label>
-      <Input
+      <Label>Upload file:</Label>
+      <input
         type="file"
-        className="
-          w-full text-sm 
-          cursor-pointer 
-          bg-gray-100 
-        "
+        hidden 
+        className="" 
+        placeholder="" 
         onChange={handleFileChange}
       />
+      <div
+        className="text-md text-[#64748B] grow select-none"
+      >
+        { fileName ? (
+          <div>
+            { fileName }
+          </div>
+        ) : (
+          <div>
+            { placeholder }
+          </div>
+        ) }
+      </div>
     </div>
   );
 };

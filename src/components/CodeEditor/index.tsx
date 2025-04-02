@@ -154,12 +154,14 @@ const CodeEditor: FC<
               <MenuItems 
                 anchor="bottom start"
                 className="
+                  mt-1
                   bg-monokai-gray-800 p-3
-                  rounded divide-y-2 divide-gray-400
+                  rounded border-monokai-gray-1000 border
                 "
               >
                 <MenuItem 
                   as="div"
+                  onClick={(e) => e.preventDefault()}
                 >
                   <FileInput />                  
                 </MenuItem>

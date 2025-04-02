@@ -131,19 +131,19 @@ const getHoverTextClass = (tone: IButtonProps["tone"]) => {
 const getHoverBorderClass = (tone: IButtonProps["tone"]) => {
   switch(tone) {
     case 'red':
-      return "data-[hover]:border-monokai-red data-[active]:border-monokai-red";
+      return "data-[hover]:outline-monokai-red data-[active]:outline-monokai-red";
     case 'green':
-      return "data-[hover]:border-monokai-green data-[active]:border-monokai-green";
+      return "data-[hover]:outline-monokai-green data-[active]:outline-monokai-green";
     case 'blue':
-      return "data-[hover]:border-monokai-blue data-[active]:border-monokai-blue";
+      return "data-[hover]:outline-monokai-blue data-[active]:outline-monokai-blue";
     case 'orange':
-      return "data-[hover]:border-monokai-orange data-[active]:border-monokai-orange";
+      return "data-[hover]:outline-monokai-orange data-[active]:outline-monokai-orange";
     case 'violet':
-      return "data-[hover]:border-monokai-violet data-[active]:border-monokai-violet";
+      return "data-[hover]:outline-monokai-violet data-[active]:outline-monokai-violet";
     case 'yellow':
-      return "data-[hover]:border-monokai-yellow data-[active]:border-monokai-yellow";
+      return "data-[hover]:outline-monokai-yellow data-[active]:outline-monokai-yellow";
     case 'simple':
-      return "data-[hover]:border-monokai-gray-500 data-[active]:border-monokai-gray-500";
+      return "data-[hover]:outline-monokai-gray-500 data-[active]:outline-monokai-gray-500";
     default:
       return "";
   }
@@ -180,7 +180,7 @@ const variantClass = (variant: IButtonProps['variant'], tone: IButtonProps['tone
       `;  
     case 'secondary':
       return `
-        border-2 border-monokai-gray-700
+        outline-2 outline-monokai-gray-700
         text-monokai-gray-500
         ${getHoverTextClass(tone)}
         ${getHoverBorderClass(tone)}
