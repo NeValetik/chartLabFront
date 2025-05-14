@@ -5,31 +5,35 @@ import { saveTemplate, sendCode } from "@/components/CodeEditor/utils";
 
 import CodeEditor from "@/components/CodeEditor";
 import Draggable from "@/components/DragableObject";
-import ImageSection from "@/components/ImageSection";
+import dynamic from 'next/dynamic';
 import { useRouter } from "next/navigation";
+
+const ImageSection = dynamic(() => import('@/components/ImageSection'), {
+  ssr: false,
+});
 
 const InitialPage = () => {
   const [ width, setWidth ] = useState<number>( 700 );
-  const [ image, setImage ] = useState<string>( "" );
+  const [ plot, setPlot ] = useState<object | null>( {} );
   const [ loading, setLoading ] = useState<boolean>( false );
 
   const { refresh } = useRouter();
   
   const handleOnRunClick = useCallback((code: string, files?: File[] | null) => async() => {
-    setImage("");
+    setPlot({});
     setLoading(true);
     if (files){
       console.log(files);
     } 
     const resp = await sendCode(code);
     setTimeout(()=>{setLoading(false)},2600)
-    if (resp.length>0){
-      setTimeout(()=>{setImage(resp)},2600);
+    if (resp && Object.keys(resp).length>0){
+      setTimeout(()=>{setPlot(resp)},2600);
     };
   }, []);
 
-  const handleOnSaveClick = useCallback(( code: string ) => async() => {
-    const resp = await saveTemplate(code);
+  const handleOnSaveClick = useCallback(( code: string, name: string ) => async() => {
+    const resp = await saveTemplate(code, name);
     if (resp.length>0){
       refresh();
     } else {
@@ -43,7 +47,7 @@ const InitialPage = () => {
         <CodeEditor widthScale={width} onRunClick={handleOnRunClick} onSaveClick={handleOnSaveClick}/>
       </div>
       <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
-      <ImageSection image={image} loading={loading} />
+      <ImageSection plot={plot} loading={loading} />
     </div>
   );
 }

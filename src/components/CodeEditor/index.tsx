@@ -25,21 +25,22 @@ export interface Template{
 const CodeEditor: FC<
   {
     widthScale: number;
-    onRunClick: (code:string, files: File[]) => () => void;
-    onSaveClick: (code:string) => () => void;
+    onRunClick: (code: string, files: File[]) => () => void;
+    onSaveClick: (code: string, name: string ) => () => void;
   }
 > = (props) => {
   const { widthScale, onRunClick , onSaveClick} = props;
   
   const form = useForm();
-  const {
-    setValue,
-    handleSubmit
-  } = form;
+  // const {
+  //   setValue,
+  //   handleSubmit
+  // } = form;
   
   const [ files ] = useState<File[] | null>(null)
   const [ code, setCode ] = useState("// Type here...");
   const { templates } = useTemplates( { setCode } );
+  const [ fileName, setFileName ] = useState("");
 
   return (
     <FormProvider { ...form } >
@@ -100,12 +101,19 @@ const CodeEditor: FC<
                 }
               </MenuItems>
             </Menu>
+            <input
+              type="text"
+              placeholder="File Name"
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              className="px-2 py-1 rounded bg-monokai-gray-700 text-monokai-gray-500 focus:outline-none"
+            />
             <Button
               variant="primary"
               tone="yellow"
               size="large"
               className="text-base font-bold"
-              onClick={onSaveClick(code)}
+              onClick={onSaveClick(code, fileName)}
             >
               <RiStickyNoteAddLine
                 size={16} 

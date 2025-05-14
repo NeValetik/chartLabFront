@@ -1,11 +1,11 @@
 'use client';
 
 // import { FC } from "react";
-import { useState, useRef, useCallback, ChangeEvent, InputHTMLAttributes, FC } from "react";
+import { useState, ChangeEvent, InputHTMLAttributes, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import Label from "../Label";
-import Input from "../Input";
+// import Input from "../Input";
 
 interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?:string;
@@ -15,9 +15,9 @@ interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
 const FileInput: FC<FileInputProps> = ( props ) => {
   const { 
     placeholder = "file",
-    error,
-    required, 
-    ...rest 
+    // error,
+    // required, 
+    // ...rest 
   } = props 
   const [ fileName, setFileName ] = useState<string | null>();
 
@@ -34,16 +34,16 @@ const FileInput: FC<FileInputProps> = ( props ) => {
     }
   };
 
-  const ref = useRef<HTMLInputElement>( null );
+  // const ref = useRef<HTMLInputElement>( null );
 
-  const handleClick = useCallback(
-    () => {
-      if ( ref.current ) {
-        ref.current.click();
-      }
-    },
-    [ ref ],
-  );
+  // const handleClick = useCallback(
+  //   () => {
+  //     if ( ref.current ) {
+  //       ref.current.click();
+  //     }
+  //   },
+  //   [ ref ],
+  // );
 
   return (
     <div>

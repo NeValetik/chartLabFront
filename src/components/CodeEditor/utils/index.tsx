@@ -1,6 +1,6 @@
 'use server'
 
-export const sendCode = async (code:string): Promise<string> => {
+export const sendCode = async (code:string): Promise<object | null> => {
   const api = "/api/v1/plot-lab";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
@@ -16,14 +16,13 @@ export const sendCode = async (code:string): Promise<string> => {
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
     }
-    const blob = await response.blob();
+    const data = await response.json();
+    console.log(data)
 
-    const arrayBuffer = await blob.arrayBuffer();
-    const base64 = Buffer.from(arrayBuffer).toString("base64");
-    return `data:image/png;base64,${base64}`;
+    return data;
   } catch (error) {
     console.error("Error sending code:", error);
-    return ""; // Re-throw the error for the caller to handle
+    return null; // Re-throw the error for the caller to handle
   }
 };
 
@@ -54,7 +53,7 @@ export const fetchTemplates = async (): Promise<TemplateResponse[]> => {
   }
 };
 
-export const saveTemplate = async (code:string): Promise<string> => {
+export const saveTemplate = async (code: string, name: string ): Promise<string> => {
   const api = "/api/v1/save-templates";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
@@ -64,7 +63,7 @@ export const saveTemplate = async (code:string): Promise<string> => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ filename: "try1" ,  code }),
+      body: JSON.stringify({ filename: name,  code }),
     });
 
     if (!response.ok) {

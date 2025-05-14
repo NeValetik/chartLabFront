@@ -2,17 +2,17 @@
 
 import { FC } from "react";
 
-import Image from "next/image";
 import LoadingAnimation from "./components/LoadingAnimation";
+import Plot from 'react-plotly.js';
 
 const ImageSection: FC<
   {
     loading: boolean,
-    image: string,
+    plot: null | any,
   }
-> = ( { loading, image } ) => {
+> = ( { loading, plot } ) => {
 
-  if (!image && !loading) {
+  if (!(Object.keys(plot).length !== 0) && !loading) {
     return (
     <div 
       style={{ flex: `1` }}
@@ -22,7 +22,7 @@ const ImageSection: FC<
     )
   }
 
-  if( loading && !image ){
+  if( loading && !(Object.keys(plot).length !== 0) ){
     return (
       <div 
         style={{ flex: `1` }}
@@ -38,12 +38,8 @@ const ImageSection: FC<
       style={{ flex: `1` }}
       className="select-none w-full h-full bg-monokai-gray-800 overflow-y-auto"
     >
-      <Image
-        src={image}
-        alt="Graph"
-        width={1980}
-        height={1080}
-        className="w-full h-auto"
+      <Plot
+        data={plot?.data} layout={plot?.layout}
       />
     </div>
   );

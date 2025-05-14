@@ -11,7 +11,11 @@ interface InputBaseProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const InputBase: FC<InputBaseProps> = (props) => {
-  const { type, className, ...rest } = props
+  const { 
+    type, 
+    className,
+    // ...rest
+  } = props
 
   if ( type === "file" ){
     return (
