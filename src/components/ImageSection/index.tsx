@@ -39,7 +39,12 @@ const ImageSection: FC<
       className="select-none w-full h-full bg-monokai-gray-800 overflow-y-auto"
     >
       <Plot
-        data={plot?.data} layout={plot?.layout}
+        data={plot?.data} 
+        layout={plot?.layout}
+        config={{ displaylogo: false }}
+        className="w-full h-full"
+        style={{ flex: `1` }}
+        useResizeHandler
       />
     </div>
   );
