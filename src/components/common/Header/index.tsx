@@ -25,36 +25,40 @@ const Header = () => {
           ChartLab
         </p>
       </div>
-      <Link
-        href="https://github.com/NeValetik/ChartLab"
+      <div
+        className="flex gap-4"
       >
-        <Button
-          variant="primary"
-          size="small"
-          tone="yellow"
+        <Link
+          href="https://github.com/NeValetik/ChartLab"
         >
-          <div
-            className="text-xl font-bold"
+          <Button
+            variant="primary"
+            size="small"
+            tone="yellow"
           >
-            Server
-          </div>
-        </Button>
-      </Link>
-      <Link
-        href="https://github.com/NeValetik/chartLabFront"
-      >
-        <Button
-          variant="primary"
-          size="small"
-          tone="yellow"
+            <div
+              className="text-xl font-bold"
+            >
+              Server
+            </div>
+          </Button>
+        </Link>
+        <Link
+          href="https://github.com/NeValetik/chartLabFront"
         >
-          <div
-            className="text-xl font-bold"
+          <Button
+            variant="primary"
+            size="small"
+            tone="yellow"
           >
-            Client
-          </div>
-        </Button>
-      </Link>
+            <div
+              className="text-xl font-bold"
+            >
+              Client
+            </div>
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };
