@@ -14,21 +14,22 @@ const ImageSection = dynamic(() => import('@/components/ImageSection'), {
 
 const InitialPage = () => {
   const [ width, setWidth ] = useState<number>( 700 );
-  const [ plot, setPlot ] = useState<object | null>( {} );
+  const [ plots, setPlots ] = useState<object[] | null>( [] );
   const [ loading, setLoading ] = useState<boolean>( false );
 
   const { refresh } = useRouter();
   
   const handleOnRunClick = useCallback((code: string, files?: File[] | null) => async() => {
-    setPlot({});
+    setPlots([]);
     setLoading(true);
     if (files){
       console.log(files);
     } 
-    const resp = await sendCode(code);
+    const resp: object[] | null = await sendCode(code);
+    console.log(resp)
     setTimeout(()=>{setLoading(false)},2600)
     if (resp && Object.keys(resp).length>0){
-      setTimeout(()=>{setPlot(resp)},2600);
+      setTimeout(()=>{setPlots(resp)},2600);
     };
   }, []);
 
@@ -47,7 +48,7 @@ const InitialPage = () => {
         <CodeEditor widthScale={width} onRunClick={handleOnRunClick} onSaveClick={handleOnSaveClick}/>
       </div>
       <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
-      <ImageSection plot={plot} loading={loading} />
+      <ImageSection plots={plots} loading={loading} />
     </div>
   );
 }

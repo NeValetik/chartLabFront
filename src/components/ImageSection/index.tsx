@@ -1,18 +1,31 @@
 'use client'
 
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 import LoadingAnimation from "./components/LoadingAnimation";
 import Plot from 'react-plotly.js';
+import Button from "../Button";
 
 const ImageSection: FC<
   {
     loading: boolean,
-    plot: null | any,
+    plots: null | object[],
   }
-> = ( { loading, plot } ) => {
+> = ( { loading, plots } ) => {
 
-  if (!(Object.keys(plot).length !== 0) && !loading) {
+  const [currentPlotNumber, setCurrentPlotNumber] = useState<number>(0);
+  const totalPlots = plots?.length || 0;
+  const [plotToShow, setPlotToShow] = useState<any>({});
+
+  const handlePlotChange = (delta: number = 1) => {
+    setCurrentPlotNumber((prev)=> prev + delta);
+  }
+
+  useEffect(()=>{
+    setPlotToShow(!!plots?.length ? plots[currentPlotNumber] : {});
+  }, [plots, currentPlotNumber]) 
+
+  if (!(plots?.length) && !loading) {
     return (
     <div 
       style={{ flex: `1` }}
@@ -22,7 +35,7 @@ const ImageSection: FC<
     )
   }
 
-  if( loading && !(Object.keys(plot).length !== 0) ){
+  if( loading && !(plots?.length) ){
     return (
       <div 
         style={{ flex: `1` }}
@@ -36,16 +49,43 @@ const ImageSection: FC<
   return (
     <div 
       style={{ flex: `1` }}
-      className="select-none w-full h-full bg-monokai-gray-800 overflow-y-auto"
+      className="relative select-none w-full h-full bg-monokai-gray-800 overflow-y-hidden"
     >
       <Plot
-        data={plot?.data} 
-        layout={plot?.layout}
+        data={plotToShow?.data} 
+        layout={plotToShow?.layout}
         config={{ displaylogo: false }}
         className="w-full h-full"
         style={{ flex: `1` }}
         useResizeHandler
       />
+      <div className="absolute bottom-3 left-5 right-0 flex z-50 justify-center gap-2">
+        <Button
+          aria-label="Previous"
+          variant="primary"
+          tone="violet"
+          disabled={currentPlotNumber <= 0 }
+          className="!rounded-full"
+          onClick={ () => {handlePlotChange(-1);} }
+        >
+          {`<`}
+        </Button>
+        <div
+          className="flex items-center "
+        >
+          {currentPlotNumber+1} of {totalPlots}
+        </div>
+        <Button
+          aria-label="Next"
+          variant="primary"
+          tone="violet"
+          disabled={currentPlotNumber >= totalPlots-1 }
+          className="!rounded-full"
+          onClick={ () => {handlePlotChange(1);}}
+        >
+          {`>`}
+        </Button>
+      </div>
     </div>
   );
 }

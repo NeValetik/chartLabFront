@@ -1,6 +1,6 @@
 'use server'
 
-export const sendCode = async (code:string): Promise<object | null> => {
+export const sendCode = async (code:string): Promise<object[] | null> => {
   const api = "/api/v1/plot-lab";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
@@ -12,14 +12,16 @@ export const sendCode = async (code:string): Promise<object | null> => {
       },
       body: JSON.stringify({ code }),
     });
-
+    console.log(response);
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
     }
     const data = await response.json();
-    console.log(data)
+    const retValue = data.plots.map((plot: string)=>JSON.parse(plot));
+    console.log(retValue);
+    // console.dir(retValue, { depth: null })
 
-    return data;
+    return retValue;
   } catch (error) {
     console.error("Error sending code:", error);
     return null; // Re-throw the error for the caller to handle
@@ -64,6 +66,32 @@ export const saveTemplate = async (code: string, name: string ): Promise<string>
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ filename: name,  code }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error("Error sending code:", error);
+    return ""; // Re-throw the error for the caller to handle
+  }
+};
+
+export const saveData = async (data: any ): Promise<string> => {
+  console.log(data);
+  const api = "/api/v1/save-data";
+  const url = `${process.env.SERVER_ENDPOINT}${api}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify( { } ),
     });
 
     if (!response.ok) {

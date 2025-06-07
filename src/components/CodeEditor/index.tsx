@@ -13,6 +13,7 @@ import FileInput from "../Form/FileInput";
 import Button from "../Button";
 import Editor from "@monaco-editor/react";
 import useTemplates from "./hooks/useTemplates";
+import FileInputForm from "./components/FileInputForm";
 
 export interface Template{
   key: string;
@@ -52,7 +53,7 @@ const CodeEditor: FC<
         }
         className="h-full overflow-hidden "
       >
-        <div className="flex justify-between bg-monokai-gray-800 px-3 py-1">
+        <div className="flex justify-between bg-monokai-gray-800 px-3 py-1 min-w-[630px]">
           <div className="flex gap-4 items-center">
             <Menu>
               <MenuButton
@@ -138,44 +139,7 @@ const CodeEditor: FC<
             >
               View files
             </Button>
-            <Menu>
-              <MenuButton
-                className="
-                  rounded 
-                  transition-colors
-                  flex justify-center items-center 
-                  cursor-pointer
-                  gap-1
-                  data-[hover]:bg-monokai-yellow
-                  data-[hover]:data-[active]:bg-monokai-green
-                  bg-monokai-gray-700
-                  text-monokai-gray-500
-                  data-[hover]:text-monokai-gray-1000
-                  py-3 px-6 
-                  font-bold
-                "
-              >
-                <RiFileAddLine
-                  size={16} 
-                  className="h-4 w-4"
-                />
-              </MenuButton>
-              <MenuItems 
-                anchor="bottom start"
-                className="
-                  mt-1
-                  bg-monokai-gray-800 p-3
-                  rounded border-monokai-gray-1000 border
-                "
-              >
-                <MenuItem 
-                  as="div"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <FileInput />                  
-                </MenuItem>
-              </MenuItems>
-            </Menu>
+            <FileInputForm />
           </div>
           <div className="flex gap-4">
             <div>
