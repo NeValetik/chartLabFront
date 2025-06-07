@@ -1,6 +1,7 @@
 // import { useState, memo, FC } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -24,7 +25,9 @@ const Header = () => {
           ChartLab
         </p>
       </div>
-      <div>
+      <Link
+        href="https://github.com/NeValetik/ChartLab"
+      >
         <Button
           variant="primary"
           size="small"
@@ -33,10 +36,25 @@ const Header = () => {
           <div
             className="text-xl font-bold"
           >
-            Docs
+            Server
           </div>
         </Button>
-      </div>
+      </Link>
+      <Link
+        href="https://github.com/NeValetik/chartLabFront"
+      >
+        <Button
+          variant="primary"
+          size="small"
+          tone="yellow"
+        >
+          <div
+            className="text-xl font-bold"
+          >
+            Client
+          </div>
+        </Button>
+      </Link>
     </div>
   );
 };
