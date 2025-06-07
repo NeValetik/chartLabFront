@@ -43,8 +43,8 @@ const InitialPage = () => {
   }, [ refresh ]);
 
   return (
-    <div className="h-lvh flex">
-      <div style={{ flex: `0 0 ${width}px` }} className="h-full">
+    <div className="h-[720px] flex">
+      <div style={{ flex: `0 0 ${width}px` }} className="]">
         <CodeEditor widthScale={width} onRunClick={handleOnRunClick} onSaveClick={handleOnSaveClick}/>
       </div>
       <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
