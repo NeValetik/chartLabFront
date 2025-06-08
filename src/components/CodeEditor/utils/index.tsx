@@ -1,7 +1,7 @@
 'use server'
 
 export const sendCode = async (code:string): Promise<object[] | null> => {
-  const api = "/api/v1/plot-lab";
+  const api = "/api/v1/get-chart";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {
@@ -36,7 +36,7 @@ export interface TemplateResponse
 }
 
 export const fetchTemplates = async (): Promise<TemplateResponse[]> => {
-  const api = "/api/v1/files";
+  const api = "/api/v1/get-templates";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {
@@ -56,7 +56,7 @@ export const fetchTemplates = async (): Promise<TemplateResponse[]> => {
 };
 
 export const saveTemplate = async (code: string, name: string ): Promise<string> => {
-  const api = "/api/v1/save-templates";
+  const api = "/api/v1/save-template";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {
@@ -82,7 +82,7 @@ export const saveTemplate = async (code: string, name: string ): Promise<string>
 
 export const saveData = async (data: any ): Promise<string> => {
   console.log(data);
-  const api = "/api/v1/save-data";
+  const api = "/api/v1/save-statistic-data";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {
