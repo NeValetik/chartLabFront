@@ -7,6 +7,7 @@ import {
 } from "@remixicon/react";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { FormProvider, useForm } from "react-hook-form";
+import { saveData } from "./utils";
 
 import Button from "../Button";
 import Editor from "@monaco-editor/react";
@@ -36,10 +37,15 @@ const CodeEditor: FC<
   //   handleSubmit
   // } = form;
   
-  const [ files ] = useState<File[] | null>(null)
+  const [ files, setFiles ] = useState<File[]>([])
   const [ code, setCode ] = useState("// Type here...");
   const { templates } = useTemplates( { setCode } );
   const [ fileName, setFileName ] = useState("");
+
+  const handleFileUpload = (file: File) => {
+    setFiles(prev => [...prev, file]);
+    saveData(file);
+  };
 
   return (
     <FormProvider { ...form } >
@@ -55,19 +61,14 @@ const CodeEditor: FC<
           <div className="flex gap-4 items-center">
             <Menu>
               <MenuButton
+                as={Button}
+                variant="primary"
+                size="medium"
+                tone="yellow"
                 className="
-                  rounded 
-                  transition-colors
-                  flex justify-center items-center 
-                  cursor-pointer
-                  gap-1
-                  data-[hover]:bg-monokai-yellow
-                  data-[hover]:data-[active]:bg-monokai-green
-                  bg-monokai-gray-700
-                  text-monokai-gray-500
-                  data-[hover]:text-monokai-gray-1000
-                  py-2 px-4 
                   font-bold
+                  data-[open]:!bg-monokai-yellow
+                  data-[open]:!text-monokai-gray-1000
                 "
               >
                 Templates
@@ -146,15 +147,52 @@ const CodeEditor: FC<
                 ${widthScale <= 540 ? "hidden" : ""}
               `}
             >
-              <Button
-                variant="primary"
-                tone="yellow"
-                size="medium"
-                className="text-base font-bold whitespace-nowrap"
-                // onClick={onRunClick(code)}
-              >
-                View files
-              </Button>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  variant="primary"
+                  size="medium"
+                  tone="yellow"
+                  className="
+                    font-bold whitespace-nowrap
+                    data-[open]:!bg-monokai-yellow
+                    data-[open]:!text-monokai-gray-1000
+                  "
+                >
+                  View files
+                </MenuButton>
+                <MenuItems 
+                  anchor="bottom start"
+                  className="
+                    mt-2
+                    bg-monokai-gray-800 p-3
+                    rounded divide-y-2 divide-monokai-gray-700
+                    min-w-48
+                  "
+                >
+                  {files.length === 0 ? (
+                    <MenuItem as="div">
+                      <div className="text-monokai-gray-500 font-bold py-2">
+                        No files uploaded
+                      </div>
+                    </MenuItem>
+                  ) : (
+                    files.map((file, index) => (
+                      <MenuItem 
+                        as="div"
+                        key={`${file.name}-${index}`} 
+                      >
+                        <div className="cursor-pointer font-bold text-monokai-gray-500 py-1 flex justify-between items-center">
+                          <span className="truncate">{file.name}</span>
+                          <span className="text-xs text-monokai-gray-600 ml-2">
+                            ({(file.size / 1024).toFixed(1)}KB)
+                          </span>
+                        </div>
+                      </MenuItem>
+                    ))
+                  )}
+                </MenuItems>
+              </Menu>
             </div>
             <div 
               className={`
@@ -164,7 +202,7 @@ const CodeEditor: FC<
                 ${widthScale <= 700 ? "hidden" : ""}
               `}
             >
-              <FileInputForm />
+              <FileInputForm onFileUpload={handleFileUpload} />
             </div>
           </div>
 
@@ -174,7 +212,7 @@ const CodeEditor: FC<
                 variant="primary-inverted"
                 tone="green"
                 size="large"
-                onClick={onRunClick(code, files ?? [])}
+                onClick={onRunClick(code, files)}
               >
                 <RiPlayLargeFill
                   size={16} 

@@ -86,22 +86,47 @@ export const saveData = async (data: any ): Promise<string> => {
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {
+    let body;
+    let headers: HeadersInit = {};
+
+    // Check if data contains file(s)
+    if (data instanceof FormData) {
+      // If data is already FormData, use it directly
+      body = data;
+      // Don't set Content-Type header for FormData, let browser set it with boundary
+    } else if (data && typeof data === 'object' && data.file instanceof File) {
+      // If data contains a File object, create FormData
+      const formData = new FormData();
+      formData.append('file', data.file);
+      
+      // Add other data fields if they exist
+      Object.keys(data).forEach(key => {
+        if (key !== 'file' && data[key] !== undefined) {
+          formData.append(key, typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key]);
+        }
+      });
+      
+      body = formData;
+    } else {
+      // For non-file data, send as JSON
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(data);
+    }
+
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify( { } ),
+      headers,
+      body,
     });
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
     }
-    const data = await response.json();
-    return data;
+    const responseData = await response.json();
+    return responseData;
 
   } catch (error) {
-    console.error("Error sending code:", error);
-    return ""; // Re-throw the error for the caller to handle
+    console.error("Error sending data:", error);
+    return "";
   }
 };
