@@ -7,6 +7,9 @@ import CodeEditor from "@/components/CodeEditor";
 import Draggable from "@/components/DragableObject";
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/navigation";
+import NotificationContainer from "@/components/Notification/NotificationContainer";
+import { useNotification } from "@/components/Notification/useNotification";
+
 
 const ImageSection = dynamic(() => import('@/components/ImageSection'), {
   ssr: false,
@@ -16,7 +19,7 @@ const InitialPage = () => {
   const [ width, setWidth ] = useState<number>( 700 );
   const [ plots, setPlots ] = useState<object[] | null>( [] );
   const [ loading, setLoading ] = useState<boolean>( false );
-
+  const { notifications, hideNotification, showSuccess, showError } = useNotification();
   const { refresh } = useRouter();
   
   const handleOnRunClick = useCallback((code: string, files?: File[] | null) => async() => {
@@ -37,8 +40,9 @@ const InitialPage = () => {
     const resp = await saveTemplate(code, name);
     if (resp.length>0){
       refresh();
+      showSuccess("Template saved", 5000);
     } else {
-      console.error("Error saving temlpate")
+      showError("Error saving temlpate", 5000);
     }
   }, [ refresh ]);
 
@@ -49,6 +53,10 @@ const InitialPage = () => {
       </div>
       <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
       <ImageSection plots={plots} loading={loading} />
+      <NotificationContainer 
+        notifications={notifications}
+        onClose={hideNotification}
+      />
     </div>
   );
 }

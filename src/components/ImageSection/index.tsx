@@ -5,8 +5,6 @@ import { FC, useEffect, useState } from "react";
 import LoadingAnimation from "./components/LoadingAnimation";
 import Plot from 'react-plotly.js';
 import Button from "../Button";
-import NotificationContainer from "../Notification/NotificationContainer";
-import { useNotification } from "../Notification/useNotification";
 
 const ImageSection: FC<
   {

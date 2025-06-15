@@ -37,17 +37,17 @@ const Notification: FC<NotificationProps> = ({
   if (!mounted || !isVisible) return null;
 
   const getNotificationStyles = () => {
-    const baseStyles = "flex items-center gap-3 p-4 rounded-lg shadow-lg min-w-80 max-w-96";
+    const baseStyles = "flex items-center gap-10 p-4 rounded-lg min-w-80 max-w-96";
     
     switch (type) {
       case "success":
-        return `${baseStyles} bg-green-600 text-white`;
+        return `${baseStyles} bg-monokai-green text-white`;
       case "error":
-        return `${baseStyles} bg-red-600 text-white`;
+        return `${baseStyles} bg-monokai-red text-white`;
       case "warning":
-        return `${baseStyles} bg-yellow-600 text-white`;
+        return `${baseStyles} bg-monokai-yellow text-white`;
       case "info":
-        return `${baseStyles} bg-blue-600 text-white`;
+        return `${baseStyles} bg-monokai-blue text-white`;
       default:
         return `${baseStyles} bg-gray-600 text-white`;
     }

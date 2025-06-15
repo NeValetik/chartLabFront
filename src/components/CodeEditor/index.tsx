@@ -3,18 +3,15 @@
 import { useState, memo, FC } from "react";
 import { 
   RiPlayLargeFill,
-  RiFileAddLine,
   RiStickyNoteAddLine
 } from "@remixicon/react";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { FormProvider, useForm } from "react-hook-form";
-import FileInput from "../Form/FileInput";
 
 import Button from "../Button";
 import Editor from "@monaco-editor/react";
 import useTemplates from "./hooks/useTemplates";
 import FileInputForm from "./components/FileInputForm";
-import { useNotification } from "../Notification/useNotification";
 
 export interface Template{
   key: string;
@@ -43,7 +40,6 @@ const CodeEditor: FC<
   const [ code, setCode ] = useState("// Type here...");
   const { templates } = useTemplates( { setCode } );
   const [ fileName, setFileName ] = useState("");
-  const { showInfo } = useNotification();
 
   return (
     <FormProvider { ...form } >
@@ -55,7 +51,7 @@ const CodeEditor: FC<
         }
         className="h-full overflow-hidden "
       >
-        <div className="flex justify-between bg-monokai-gray-800 px-3 py-1 min-w-[436px]">
+        <div className="flex justify-between bg-monokai-gray-800 px-3 py-1 min-w-[205px]">
           <div className="flex gap-4 items-center">
             <Menu>
               <MenuButton
@@ -104,7 +100,13 @@ const CodeEditor: FC<
                 }
               </MenuItems>
             </Menu>
-            <div className="relative">
+            <div className={` 
+              relative
+              transition-all duration-300 
+              ${widthScale > 436 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+              ${widthScale <= 432 ? "hidden" : ""}
+            `}
+            >
 
               <input
                 type="text"
@@ -121,13 +123,13 @@ const CodeEditor: FC<
                   absolute right-1 top-1 
                   text-base font-bold 
                   data-[disabled=true]:!bg-monokai-gray-700
+                  data-[disabled=true]:!pointer-events-none
                 "
                 disabled={!fileName}
                 data-disabled={!fileName}
                 onClick={()=>{
                   onSaveClick(code, `${fileName}.ch`)();
                   setFileName("");
-                  showInfo("Template saved", 5000);
                 }}
               >
                 <RiStickyNoteAddLine
