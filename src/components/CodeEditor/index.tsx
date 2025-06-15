@@ -44,7 +44,6 @@ const CodeEditor: FC<
 
   const handleFileUpload = (file: File) => {
     setFiles(prev => [...prev, file]);
-    saveData(file);
   };
 
   return (
