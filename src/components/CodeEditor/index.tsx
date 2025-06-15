@@ -14,6 +14,7 @@ import Button from "../Button";
 import Editor from "@monaco-editor/react";
 import useTemplates from "./hooks/useTemplates";
 import FileInputForm from "./components/FileInputForm";
+import { useNotification } from "../Notification/useNotification";
 
 export interface Template{
   key: string;
@@ -42,6 +43,7 @@ const CodeEditor: FC<
   const [ code, setCode ] = useState("// Type here...");
   const { templates } = useTemplates( { setCode } );
   const [ fileName, setFileName ] = useState("");
+  const { showInfo } = useNotification();
 
   return (
     <FormProvider { ...form } >
@@ -53,7 +55,7 @@ const CodeEditor: FC<
         }
         className="h-full overflow-hidden "
       >
-        <div className="flex justify-between bg-monokai-gray-800 px-3 py-1 min-w-[630px]">
+        <div className="flex justify-between bg-monokai-gray-800 px-3 py-1 min-w-[436px]">
           <div className="flex gap-4 items-center">
             <Menu>
               <MenuButton
@@ -102,43 +104,66 @@ const CodeEditor: FC<
                 }
               </MenuItems>
             </Menu>
-            <input
-              type="text"
-              placeholder="File Name"
-              value={fileName}
-              onChange={(e) => setFileName(e.target.value)}
-              className="px-2 py-1 rounded bg-monokai-gray-700 text-monokai-gray-500 focus:outline-none"
-            />
+            <div className="relative">
+
+              <input
+                type="text"
+                placeholder="File Name"
+                value={fileName}
+                onChange={(e) => setFileName(e.target.value)}
+                className="px-2 py-1 rounded bg-monokai-gray-700 text-monokai-gray-500 focus:outline-none"
+              />
+              <Button
+                variant={fileName ? "primary-inverted" : "primary"}
+                tone="yellow"
+                size="small"
+                className="
+                  absolute right-1 top-1 
+                  text-base font-bold 
+                  data-[disabled=true]:!bg-monokai-gray-700
+                "
+                disabled={!fileName}
+                data-disabled={!fileName}
+                onClick={()=>{
+                  onSaveClick(code, `${fileName}.ch`)();
+                  setFileName("");
+                  showInfo("Template saved", 5000);
+                }}
+              >
+                <RiStickyNoteAddLine
+                  size={16} 
+                  className="h-4 w-4"
+                />
+              </Button>
+            </div>
+            
+          </div>
+          <div 
+            className={`
+              flex gap-4
+              transition-all duration-300 
+              ${widthScale > 707 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+              ${widthScale <= 700 ? "hidden" : ""}
+            `}
+          >
             <Button
               variant="primary"
               tone="yellow"
-              size="large"
-              className="text-base font-bold"
-              onClick={onSaveClick(code, fileName)}
+              size="medium"
+              className="text-base font-bold whitespace-nowrap"
+              // onClick={onRunClick(code)}
             >
-              <RiStickyNoteAddLine
-                size={16} 
-                className="h-4 w-4"
-              />
+              View files
             </Button>
           </div>
           <div 
             className={`
               flex gap-4
               transition-all duration-300 
-              ${widthScale > 500 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+              ${widthScale > 707 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+              ${widthScale <= 700 ? "hidden" : ""}
             `}
-            hidden={ widthScale <= 480 }
           >
-            <Button
-              variant="primary"
-              tone="yellow"
-              size="medium"
-              className="text-base font-bold"
-              // onClick={onRunClick(code)}
-            >
-              View files
-            </Button>
             <FileInputForm />
           </div>
           <div className="flex gap-4">

@@ -15,7 +15,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body>
+      <body className="overflow-hidden">
         <Providers>
           <Header />
           {children}

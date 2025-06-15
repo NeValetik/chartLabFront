@@ -43,7 +43,7 @@ const InitialPage = () => {
   }, [ refresh ]);
 
   return (
-    <div className="h-[720px] flex">
+    <div className="h-screen flex">
       <div style={{ flex: `0 0 ${width}px` }} className="]">
         <CodeEditor widthScale={width} onRunClick={handleOnRunClick} onSaveClick={handleOnSaveClick}/>
       </div>

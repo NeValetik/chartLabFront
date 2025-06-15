@@ -14,11 +14,10 @@ const Header = () => {
       <div className="flex items-center gap-3">
         <div>
           <Image 
-            src="/logo.png"
+            src="/white.svg"
             alt="logo"
             width={ 50 }
             height={ 50 }
-            className="h-auto w-10 bg-white rounded" 
           />
         </div>  
         <p className="font-bold text-2xl text-monokai-yellow">
