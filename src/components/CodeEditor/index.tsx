@@ -136,36 +136,36 @@ const CodeEditor: FC<
                 />
               </Button>
             </div>
-            
-          </div>
-          <div 
-            className={`
-              flex gap-4
-              transition-all duration-300 
-              ${widthScale > 707 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
-              ${widthScale <= 700 ? "hidden" : ""}
-            `}
-          >
-            <Button
-              variant="primary"
-              tone="yellow"
-              size="medium"
-              className="text-base font-bold whitespace-nowrap"
-              // onClick={onRunClick(code)}
+            <div 
+              className={`
+                flex gap-4
+                transition-all duration-300 
+                ${widthScale > 565 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+                ${widthScale <= 540 ? "hidden" : ""}
+              `}
             >
-              View files
-            </Button>
+              <Button
+                variant="primary"
+                tone="yellow"
+                size="medium"
+                className="text-base font-bold whitespace-nowrap"
+                // onClick={onRunClick(code)}
+              >
+                View files
+              </Button>
+            </div>
+            <div 
+              className={`
+                flex gap-4
+                transition-all duration-300 
+                ${widthScale > 707 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+                ${widthScale <= 700 ? "hidden" : ""}
+              `}
+            >
+              <FileInputForm />
+            </div>
           </div>
-          <div 
-            className={`
-              flex gap-4
-              transition-all duration-300 
-              ${widthScale > 707 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
-              ${widthScale <= 700 ? "hidden" : ""}
-            `}
-          >
-            <FileInputForm />
-          </div>
+
           <div className="flex gap-4">
             <div>
               <Button
