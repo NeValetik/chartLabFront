@@ -35,8 +35,35 @@ export interface TemplateResponse
   code: string;
 }
 
+export interface StatisticDataResponse
+{
+  key: string; 
+  label: string;
+  code: string;
+}
+
 export const fetchTemplates = async (): Promise<TemplateResponse[]> => {
   const api = "/api/v1/get-templates";
+  const url = `${process.env.SERVER_ENDPOINT}${api}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const fetchStatisticData = async (): Promise<StatisticDataResponse[]> => {
+  const api = "/api/v1/get-statistic-data";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {

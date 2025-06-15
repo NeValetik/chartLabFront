@@ -13,6 +13,8 @@ import Button from "../Button";
 import Editor from "@monaco-editor/react";
 import useTemplates from "./hooks/useTemplates";
 import FileInputForm from "./components/FileInputForm";
+import useStatisticData from "./hooks/useStatisticData";
+import { useNotification } from "@/contexts/NotificationContext";
 
 export interface Template{
   key: string;
@@ -39,8 +41,10 @@ const CodeEditor: FC<
   
   const [ files, setFiles ] = useState<File[]>([])
   const [ code, setCode ] = useState("// Type here...");
-  const { templates } = useTemplates( { setCode } );
+  const { templates, refetch: refetchTemplates } = useTemplates( { setCode } );
+  const { statisticData, refetch: refetchStatisticData } = useStatisticData( { setCode } );
   const [ fileName, setFileName ] = useState("");
+  const { showError } = useNotification();
 
   const handleFileUpload = (file: File) => {
     setFiles(prev => [...prev, file]);
@@ -90,7 +94,11 @@ const CodeEditor: FC<
                         <button
                           className="cursor-pointer font-bold text-monokai-gray-500"
                           type="button"
-                          onClick={()=>setCode(template.code)}
+                          onClick={()=>{
+                            setCode(template.code)
+                            refetchTemplates();
+                            refetchStatisticData();
+                          }}
                         >
                           {template.label}
                         </button>
@@ -169,26 +177,41 @@ const CodeEditor: FC<
                     min-w-48
                   "
                 >
-                  {files.length === 0 ? (
+                  {statisticData.length === 0 ? (
                     <MenuItem as="div">
                       <div className="text-monokai-gray-500 font-bold py-2">
                         No files uploaded
                       </div>
                     </MenuItem>
                   ) : (
-                    files.map((file, index) => (
-                      <MenuItem 
-                        as="div"
-                        key={`${file.name}-${index}`} 
-                      >
-                        <div className="cursor-pointer font-bold text-monokai-gray-500 py-1 flex justify-between items-center">
-                          <span className="truncate">{file.name}</span>
-                          <span className="text-xs text-monokai-gray-600 ml-2">
-                            ({(file.size / 1024).toFixed(1)}KB)
-                          </span>
-                        </div>
-                      </MenuItem>
-                    ))
+                    statisticData.map((data, index) => {
+                      const isXlsx = data.label.endsWith(".xlsx");
+                      return (
+                        <MenuItem 
+                          as="div"
+                          key={`${data.key}-${index}`} 
+                        >
+                          <button 
+                            className="
+                              cursor-pointer font-bold text-monokai-gray-500 
+                              py-1 flex justify-between items-center
+                            "
+                            onClick={()=>{
+                              if (isXlsx) {
+                                showError("XLSX files are not supported yet");
+                                return;
+                              }
+                              setCode(data.code)
+                              refetchTemplates();
+                              refetchStatisticData();
+                            }}
+                            type="button"
+                          >
+                            <span className="truncate">{data.label}</span>
+                          </button>
+                        </MenuItem>
+                      );
+                    })
                   )}
                 </MenuItems>
               </Menu>
@@ -211,6 +234,7 @@ const CodeEditor: FC<
                 variant="primary-inverted"
                 tone="green"
                 size="large"
+                className="data-[hover]:!text-monokai-green"
                 onClick={onRunClick(code, files)}
               >
                 <RiPlayLargeFill

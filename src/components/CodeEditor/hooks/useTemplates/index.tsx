@@ -10,6 +10,7 @@ interface UseTemplatesProps {
 
 const useTemplates = ( { setCode }: UseTemplatesProps ) => {
   const [ templates, setTemplates ] = useState<Template[]>([]);
+  const [ refetch, setRefetch ] = useState(false);
 
   useEffect(()=>{
     const handleFetchTemplates = async() =>{
@@ -28,9 +29,13 @@ const useTemplates = ( { setCode }: UseTemplatesProps ) => {
       setTemplates([{ key: "0", label: "empty", onClick: ()=>{}, code: "//There we go" }]);
     }
     handleFetchTemplates();
-  }, [ setCode ])
+  }, [ setCode, refetch ])
   
-  return { templates };
+  const handleRefetch = () => {
+    setRefetch(!refetch);
+  }
+
+  return { templates, refetch: handleRefetch };
 }
 
 export default useTemplates;
