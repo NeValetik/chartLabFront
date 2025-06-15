@@ -3,6 +3,8 @@
 import { useState, ReactNode } from 'react'
 import { useServerInsertedHTML } from 'next/navigation'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import { NotificationProvider } from '@/contexts/NotificationContext'
+import GlobalNotificationContainer from '@/components/GlobalNotificationContainer'
  
 const Providers = ({
   children,
@@ -19,11 +21,21 @@ const Providers = ({
     return <>{styles}</>
   })
  
-  if (typeof window !== 'undefined') return <>{children}</>
+  if (typeof window !== 'undefined') {
+    return (
+      <NotificationProvider>
+        {children}
+        <GlobalNotificationContainer />
+      </NotificationProvider>
+    )
+  }
  
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {children}
+      <NotificationProvider>
+        {children}
+        <GlobalNotificationContainer />
+      </NotificationProvider>
     </StyleSheetManager>
   )
 }

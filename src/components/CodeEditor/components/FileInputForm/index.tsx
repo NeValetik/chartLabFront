@@ -5,6 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import Button from "@/components/Button";
 import { RiFileAddLine } from "@remixicon/react";
 import { saveData } from "../../utils";
+import { useNotification } from "@/contexts/NotificationContext";
 
 interface FileInputFormProps {
   onFileUpload?: (file: File) => void;
@@ -14,6 +15,7 @@ const FileInputForm = ({ onFileUpload }: FileInputFormProps) => {
   const formMethods = useForm();
   const { handleSubmit, setValue } = formMethods;
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { showSuccess } = useNotification();
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
@@ -31,6 +33,7 @@ const FileInputForm = ({ onFileUpload }: FileInputFormProps) => {
   const onSubmit = async (data: any) => {
     console.log("Submitted file:", data.file);
     await saveData(data.file);
+    showSuccess("File uploaded successfully", 5000);
   };
 
   return (

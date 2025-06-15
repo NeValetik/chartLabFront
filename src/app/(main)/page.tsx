@@ -7,8 +7,7 @@ import CodeEditor from "@/components/CodeEditor";
 import Draggable from "@/components/DragableObject";
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/navigation";
-import NotificationContainer from "@/components/Notification/NotificationContainer";
-import { useNotification } from "@/components/Notification/useNotification";
+import { useNotification } from "@/contexts/NotificationContext";
 
 
 const ImageSection = dynamic(() => import('@/components/ImageSection'), {
@@ -19,7 +18,7 @@ const InitialPage = () => {
   const [ width, setWidth ] = useState<number>( 715 );
   const [ plots, setPlots ] = useState<object[] | null>( [] );
   const [ loading, setLoading ] = useState<boolean>( false );
-  const { notifications, hideNotification, showSuccess, showError } = useNotification();
+  const { showSuccess, showError } = useNotification();
   const { refresh } = useRouter();
   
   const handleOnRunClick = useCallback((code: string, files?: File[] | null) => async() => {
@@ -44,7 +43,7 @@ const InitialPage = () => {
     } else {
       showError("Error saving temlpate", 5000);
     }
-  }, [ refresh ]);
+  }, [ refresh, showSuccess, showError ]);
 
   return (
     <div className="h-screen flex">
@@ -53,10 +52,6 @@ const InitialPage = () => {
       </div>
       <Draggable min={200} max={1200} value={width} setWidth={setWidth} />
       <ImageSection plots={plots} loading={loading} />
-      <NotificationContainer 
-        notifications={notifications}
-        onClose={hideNotification}
-      />
     </div>
   );
 }
