@@ -18,7 +18,7 @@ const Draggable: FC<
   }, [ width, setWidth ])
   return (
     <div className={`${className} bg-monokai-gray-500 flex flex-col justify-center`} onMouseDown={onMouseDown}>
-      <div className="overflow bg-monokai-gray-100 w-2 h-8 z-10 items-center translate-x-[-2px] rounded-full" />
+      <div className="overflow bg-monokai-gray-100 w-2 h-8 z-10 items-center translate-x-[-2px] rounded-full -translate-y-[40px]" />
     </div>
   );
 }

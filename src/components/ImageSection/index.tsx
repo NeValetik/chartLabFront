@@ -17,10 +17,12 @@ const ImageSection: FC<
   const totalPlots = plots?.length || 0;
   const [plotToShow, setPlotToShow] = useState<any>({});
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  
+  const [initializedOnce, setInitializedOnce] = useState<boolean>(false);
+
   useEffect(()=>{
     if (loading) {
       setCurrentPlotNumber(0);
+      setInitializedOnce(true);
     }
   }, [ loading ]);
 
@@ -64,13 +66,32 @@ const ImageSection: FC<
     setPlotToShow(!!plots?.length ? plots[currentPlotNumber] : {});
   }, [plots, currentPlotNumber]) 
 
+  if (initializedOnce === false) {
+    return (
+      <div
+        style={{ flex: `1` }}
+        className="flex-col  select-none w-full h-full bg-monokai-gray-800 flex justify-center items-center"
+      >
+        <div className="text-monokai-gray-500 font-Sansation text-4xl italic -translate-y-[40px]">
+          The Art of Seeing Patterns
+        </div>
+        <div className="text-monokai-gray-500 font-Sansation text-lg -translate-y-[40px]">
+          start creating your first chart
+        </div>
+      </div>
+    )
+  }
+
   if (!(plots?.length) && !loading) {
     return (
-    <div 
-      style={{ flex: `1` }}
-      className="select-none w-full h-full bg-monokai-gray-800 flex justify-center items-center"
-    >
-    </div>
+      <div 
+        style={{ flex: `1` }}
+        className="select-none w-full h-full bg-monokai-gray-800 flex justify-center items-center"
+      >
+        <div className="text-monokai-gray-500 font-Sansation text-2xl -translate-y-[40px]">
+          No chart was created
+        </div>
+      </div>
     )
   }
 
