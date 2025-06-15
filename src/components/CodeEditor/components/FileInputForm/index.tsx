@@ -30,7 +30,7 @@ const FileInputForm = ({ onFileUpload }: FileInputFormProps) => {
 
   const onSubmit = async (data: any) => {
     console.log("Submitted file:", data.file);
-    await saveData(data);
+    await saveData(data.file);
   };
 
   return (
