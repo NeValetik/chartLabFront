@@ -104,7 +104,7 @@ const CodeEditor: FC<
               relative
               transition-all duration-300 
               ${widthScale > 436 ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
-              ${widthScale <= 432 ? "hidden" : ""}
+              ${widthScale <= 428 ? "hidden" : ""}
             `}
             >
 

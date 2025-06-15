@@ -16,7 +16,7 @@ const ImageSection = dynamic(() => import('@/components/ImageSection'), {
 });
 
 const InitialPage = () => {
-  const [ width, setWidth ] = useState<number>( 700 );
+  const [ width, setWidth ] = useState<number>( 715 );
   const [ plots, setPlots ] = useState<object[] | null>( [] );
   const [ loading, setLoading ] = useState<boolean>( false );
   const { notifications, hideNotification, showSuccess, showError } = useNotification();
