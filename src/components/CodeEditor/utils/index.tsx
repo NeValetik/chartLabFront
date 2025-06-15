@@ -80,43 +80,18 @@ export const saveTemplate = async (code: string, name: string ): Promise<string>
   }
 };
 
-export const saveData = async (data: any ): Promise<string> => {
-  console.log(data);
+export const saveData = async (file: File): Promise<string> => {
+  console.log(file);
   const api = "/api/v1/save-statistic-data";
   const url = `${process.env.SERVER_ENDPOINT}${api}`;
 
   try {
-    let body;
-    let headers: HeadersInit = {};
-
-    // Check if data contains file(s)
-    if (data instanceof FormData) {
-      // If data is already FormData, use it directly
-      body = data;
-      // Don't set Content-Type header for FormData, let browser set it with boundary
-    } else if (data && typeof data === 'object' && data.file instanceof File) {
-      // If data contains a File object, create FormData
-      const formData = new FormData();
-      formData.append('file', data.file);
-      
-      // Add other data fields if they exist
-      Object.keys(data).forEach(key => {
-        if (key !== 'file' && data[key] !== undefined) {
-          formData.append(key, typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key]);
-        }
-      });
-      
-      body = formData;
-    } else {
-      // For non-file data, send as JSON
-      headers['Content-Type'] = 'application/json';
-      body = JSON.stringify(data);
-    }
+    const formData = new FormData();
+    formData.append('file', file);
 
     const response = await fetch(url, {
       method: "POST",
-      headers,
-      body,
+      body: formData,
     });
 
     if (!response.ok) {
@@ -126,7 +101,7 @@ export const saveData = async (data: any ): Promise<string> => {
     return responseData;
 
   } catch (error) {
-    console.error("Error sending data:", error);
+    console.error("Error sending file:", error);
     return "";
   }
 };
