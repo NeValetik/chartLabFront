@@ -41,7 +41,7 @@ const InitialPage = () => {
       refresh();
       showSuccess("Template saved", 5000);
     } else {
-      showError("Error saving temlpate", 5000);
+      showError("Error saving template", 5000);
     }
   }, [ refresh, showSuccess, showError ]);
 

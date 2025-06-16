@@ -101,7 +101,9 @@ const ImageSection: FC<
         style={{ flex: `1` }}
         className="select-none w-full h-full bg-monokai-gray-800 flex justify-center items-center"
       >
-        <LoadingAnimation />
+        <div className="-translate-y-[40px]">
+          <LoadingAnimation />
+        </div>
       </div>
     )
   }

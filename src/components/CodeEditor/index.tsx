@@ -82,6 +82,8 @@ const CodeEditor: FC<
                   mt-2
                   bg-monokai-gray-800 p-3
                   rounded divide-y-2 divide-monokai-gray-700
+                  overflow-y-auto
+                  max-h-[300px]
                 "
               >
                 {templates.map((template)=> 
@@ -175,6 +177,8 @@ const CodeEditor: FC<
                     bg-monokai-gray-800 p-3
                     rounded divide-y-2 divide-monokai-gray-700
                     min-w-48
+                    overflow-y-auto
+                    max-h-[300px]
                   "
                 >
                   {statisticData.length === 0 ? (

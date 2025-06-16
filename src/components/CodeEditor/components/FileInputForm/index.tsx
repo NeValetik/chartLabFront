@@ -15,7 +15,7 @@ const FileInputForm = ({ onFileUpload }: FileInputFormProps) => {
   const formMethods = useForm();
   const { handleSubmit, setValue } = formMethods;
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { showSuccess } = useNotification();
+  const { showSuccess, showError } = useNotification();
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
@@ -32,8 +32,12 @@ const FileInputForm = ({ onFileUpload }: FileInputFormProps) => {
 
   const onSubmit = async (data: any) => {
     console.log("Submitted file:", data.file);
-    await saveData(data.file);
-    showSuccess("File uploaded successfully", 5000);
+    const resp = await saveData(data.file);
+    if (!!resp){
+      showSuccess("File uploaded successfully", 5000);
+    } else {
+      showError("Error happened while uploading", 5000)
+    }
   };
 
   return (
