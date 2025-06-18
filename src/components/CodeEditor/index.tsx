@@ -7,7 +7,7 @@ import {
 } from "@remixicon/react";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { FormProvider, useForm } from "react-hook-form";
-import { saveData } from "./utils";
+// import { saveData } from "./utils";
 
 import Button from "../Button";
 import Editor from "@monaco-editor/react";
@@ -31,7 +31,7 @@ const CodeEditor: FC<
     onSaveClick: (code: string, name: string ) => () => void;
   }
 > = (props) => {
-  const { widthScale, onRunClick , onSaveClick} = props;
+  const { widthScale, onRunClick, onSaveClick } = props;
   
   const form = useForm();
   // const {
@@ -139,6 +139,8 @@ const CodeEditor: FC<
                 data-disabled={!fileName}
                 onClick={()=>{
                   onSaveClick(code, `${fileName}.ch`)();
+                  refetchTemplates();
+                  refetchStatisticData();
                   setFileName("");
                 }}
               >

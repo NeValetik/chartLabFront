@@ -33,6 +33,7 @@ const FileInputForm = ({ onFileUpload }: FileInputFormProps) => {
   const onSubmit = async (data: any) => {
     console.log("Submitted file:", data.file);
     const resp = await saveData(data.file);
+    console.log(resp);
     if (!!resp){
       showSuccess("File uploaded successfully", 5000);
     } else {

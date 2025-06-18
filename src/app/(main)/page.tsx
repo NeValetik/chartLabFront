@@ -6,7 +6,6 @@ import { saveTemplate, sendCode } from "@/components/CodeEditor/utils";
 import CodeEditor from "@/components/CodeEditor";
 import Draggable from "@/components/DragableObject";
 import dynamic from 'next/dynamic';
-import { useRouter } from "next/navigation";
 import { useNotification } from "@/contexts/NotificationContext";
 
 
@@ -19,7 +18,6 @@ const InitialPage = () => {
   const [ plots, setPlots ] = useState<object[] | null>( [] );
   const [ loading, setLoading ] = useState<boolean>( false );
   const { showSuccess, showError } = useNotification();
-  const { refresh } = useRouter();
   
   const handleOnRunClick = useCallback((code: string, files?: File[] | null) => async() => {
     setPlots([]);
@@ -37,13 +35,12 @@ const InitialPage = () => {
 
   const handleOnSaveClick = useCallback(( code: string, name: string ) => async() => {
     const resp = await saveTemplate(code, name);
-    if (resp.length>0){
-      refresh();
+    if (!!resp){
       showSuccess("Template saved", 5000);
     } else {
       showError("Error saving template", 5000);
     }
-  }, [ refresh, showSuccess, showError ]);
+  }, [ showSuccess, showError ]);
 
   return (
     <div className="h-screen flex">
